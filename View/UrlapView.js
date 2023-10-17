@@ -1,3 +1,4 @@
+import NumberUrlapElem from "./NumberUrlapElem.js";
 import TextUrlapElem from "./textUrlapElem.js";
 
 class UrlapView {
@@ -40,7 +41,7 @@ class UrlapView {
           this.#urlapElemLista.push(new TextUrlapElem(key, this.#leiro[key],this.formElem));
           break;
         case "number":
-          this.#numberElem(key);
+          this.#urlapElemLista.push(new NumberUrlapElem(key, this.#leiro[key],this.formElem));
           break;
         default:
           console.log("Ez az űrlap elem még nem készült el")
@@ -51,19 +52,7 @@ class UrlapView {
     this.formElem.append(txt);
   }
   
-  #numberElem(key){
-    let txt =`<div class="mb-3 mt-3">
-    <label for="${key}" class="form-label">${this.#leiro.nev.megjelenes}:</label>
-    <input 
-      type="${this.#leiro[key].tipus}" class="form-control" 
-      id="${key}" 
-      name="${key}"
-      min="${this.#leiro[key].regex.min}"
-      max="${this.#leiro[key].regex.max}"
-      value="${this.#leiro[key].value}">
-  </div>`; 
-  this.formElem.append(txt);
-  }
+ 
 
   #esemenyLetrehozas(esemenynev) {
     const esemenyem = new CustomEvent(esemenynev, {detail:this});

@@ -1,4 +1,4 @@
-class TextUrlapElem{
+class NumberUrlapElem{
     #key="";
     #leiro = {};
     #value="";
@@ -7,17 +7,14 @@ class TextUrlapElem{
         this.#key = key;
         this.#leiro =leiro;
         this.formElem = szuloElem;
-        this.#textElem();
+        this.#numberElem();
         this.inputElem=$(`#${this.#key}`)
         this.validElem=this.formElem.children("div:last-child").children(".valid");
         this.invalidElem=this.formElem.children("div:last-child").children(".invalid");
 
         this.inputElem.on("keyup",()=>{
             this.#value = this.inputElem.val();
-            let reg=this.#leiro.regex;//string
-            let regObj = new RegExp(reg);
-            console.log(regObj.test(this.#value))
-            if(regObj.test(this.#value)){
+            if(this.#value > this.#leiro.regex.min && this.#value < this.#leiro.regex.max){
                 this.#valid=true;
                 this.validElem.removeClass("elrejt")
                 this.invalidElem.addClass("elrejt")
@@ -38,21 +35,20 @@ class TextUrlapElem{
         return this.#key;
     }
 
-    #textElem(){
-        let txt =`<div class="mb-3 mt-3">
-        <label for="${this.#key}" class="form-label">${this.#leiro.megjelenes}:</label>
-        <input 
-          type="${this.#leiro.tipus}" 
-          class="form-control" 
-          id="${this.#key}" 
-          name="${this.#key}"
-          placeholder="${this.#leiro.placeholder}"
-          pattern="${this.#leiro.regex}"
-          value="${this.#leiro.value}">
-        <div class="valid elrejt">OK</div>
-        <div class="invalid elrejt">${this.#leiro.validalas}</div>
-      </div>`; 
-      this.formElem.append(txt);
-      }
+    #numberElem(){
+    let txt =`<div class="mb-3 mt-3">
+    <label for="${this.#key}" class="form-label">${this.#leiro.megjelenes}:</label>
+    <input 
+      type="${this.#leiro.tipus}" class="form-control" 
+      id="${this.#key}" 
+      name="${this.#key}"
+      min="${this.#leiro.regex.min}"
+      max="${this.#leiro.regex.max}"
+      value="${this.#leiro.value}">
+    <div class="valid elrejt">OK</div>
+    <div class="invalid elrejt">${this.#leiro.validalas}</div>
+  </div>`; 
+  this.formElem.append(txt);
+  }
 }
-export default TextUrlapElem
+export default NumberUrlapElem
